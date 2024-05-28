@@ -1,3 +1,4 @@
+
 'use client';
 
-export { ThirdwebProvider, ConnectEmbed } from 'thirdweb/react';
+export { ThirdwebProvider, ConnectButton } from 'thirdweb/react';

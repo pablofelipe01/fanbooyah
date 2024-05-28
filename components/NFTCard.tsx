@@ -7,13 +7,29 @@ import { approve } from "thirdweb/extensions/erc721";
 
 type OwnedNFTsProps = {
     nft: NFT;
-    refetch: () => void;
-    refecthStakedInfo: () => void;
+    refetchOwnedNFTs: () => void;
+    refetchStakedInfo: () => void;
 };
 
-export const NFTCard = ({ nft, refetch, refecthStakedInfo }: OwnedNFTsProps) => {
+export const NFTCard = ({ nft, refetchOwnedNFTs, refetchStakedInfo }: OwnedNFTsProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isApproved, setIsApproved] = useState(false);
+
+    const handleStake = async () => {
+        try {
+            console.log("Preparing to call stake method on contract", STAKING_CONTRACT);
+            const transaction = await prepareContractCall({
+                contract: STAKING_CONTRACT,
+                method: "stake",
+                params: [[nft.id]],
+            });
+            console.log("Transaction prepared:", transaction);
+            return transaction;
+        } catch (error) {
+            console.error("Error preparing contract call for stake method:", error);
+            throw error;
+        }
+    };
 
     return (
         <div style={{ margin: "10px" }}>
@@ -27,7 +43,7 @@ export const NFTCard = ({ nft, refetch, refecthStakedInfo }: OwnedNFTsProps) => 
                     width: "200px"
                 }}
             />
-            <p style={{ margin: "0 10px 10px 10px"}}>{nft.metadata.name}</p>
+            <p style={{ margin: "0 10px 10px 10px" }}>{nft.metadata.name}</p>
             <button
                 onClick={() => setIsModalOpen(true)}
                 style={{
@@ -76,7 +92,7 @@ export const NFTCard = ({ nft, refetch, refecthStakedInfo }: OwnedNFTsProps) => 
                                 }}
                             >Close</button>
                         </div>
-                        <h3 style={{ margin: "10px 0" }}>You about to stake:</h3>
+                        <h3 style={{ margin: "10px 0" }}>You are about to stake:</h3>
                         <MediaRenderer
                             client={client}
                             src={nft.metadata.image}
@@ -101,28 +117,21 @@ export const NFTCard = ({ nft, refetch, refecthStakedInfo }: OwnedNFTsProps) => 
                             >Approve</TransactionButton>
                         ) : (
                             <TransactionButton
-                                transaction={() => (
-                                    prepareContractCall({
-                                        contract: STAKING_CONTRACT,
-                                        method: "stake",
-                                        params: [[nft.id]]
-                                    })
-                                )}
+                                transaction={handleStake}
                                 onTransactionConfirmed={() => {
                                     alert("Staked!");
                                     setIsModalOpen(false);
-                                    refetch();
-                                    refecthStakedInfo();
+                                    refetchOwnedNFTs();
+                                    refetchStakedInfo();
                                 }}
                                 style={{
                                     width: "100%"
                                 }}
                             >Stake</TransactionButton>
                         )}
-                        
                     </div>
                 </div>
             )}
         </div>
-    )
+    );
 };

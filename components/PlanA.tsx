@@ -11,7 +11,9 @@ import { claimTo, getNFTs, ownerOf, totalSupply } from "thirdweb/extensions/erc7
 import { NFTCard } from "./NFTCard";
 import { StakedNFTCard } from "./StakedNFTCard";
 
-export const Staking = () => {
+
+
+export const PlanA = () => {
     const account = useActiveAccount();
     const [ownedNFTs, setOwnedNFTs] = useState<NFT[]>([]);
     const [showIframe, setShowIframe] = useState(false);
@@ -27,7 +29,7 @@ export const Staking = () => {
             start: 0,
             count: parseInt(totalNFTSupply.toString()),
         });
-
+        
         for (let nft of nfts) {
             const owner = await ownerOf({
                 contract: NFT_CONTRACT,
@@ -57,20 +59,49 @@ export const Staking = () => {
 
     if (account) {
         return (
-            <div style={styles.container}>
-                <div style={styles.header}>
-                    <h2 style={styles.planTitle}>Plan Bronze</h2>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                backgroundColor: "#151515",
+                borderRadius: "8px",
+                width: "500px",
+                padding: "20px",
+            }}>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    margin: "20px 0",
+                    width: "100%"
+                }}>
+                    <h2 style={{ marginRight: "20px"}}>Plan Silver</h2>
                     <button
                         onClick={() => setShowIframe(true)}
-                        style={styles.button}
+                        style={{
+                            fontSize: "12px",
+                            backgroundColor: "#333",
+                            color: "#fff",
+                            padding: "10px 20px",
+                            borderRadius: "10px",
+                            cursor: "pointer",
+                            transition: "background-color 0.3s",
+                        }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#03f73c"}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}
                     >Comprar</button>
                 </div>
-                <hr style={styles.hr}/>
-                <div style={styles.section}>
+                <hr style={{
+                    width: "100%",
+                    border: "1px solid #333"
+                }}/>
+                <div style={{ 
+                    margin: "20px 0",
+                    width: "100%"
+                }}>
                     <h2>Owned NFTs</h2>
-                    <div style={styles.nftContainer}>
+                    <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", width: "500px"}}>
                         {ownedNFTs && ownedNFTs.length > 0 ? (
                             ownedNFTs.map((nft) => (
                                 <NFTCard
@@ -85,10 +116,13 @@ export const Staking = () => {
                         )}
                     </div>
                 </div>
-                <hr style={styles.hr}/>
-                <div style={styles.section}>
+                <hr style={{
+                    width: "100%",
+                    border: "1px solid #333"
+                }}/>
+                <div style={{ width: "100%", margin: "20px 0" }}>
                     <h2>Staked NFTs</h2>
-                    <div style={styles.nftContainer}>
+                    <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", width: "500px"}}>
                         {stakedInfo && stakedInfo[0].length > 0 ? (
                             stakedInfo[0].map((nft: any, index: number) => (
                                 <StakedNFTCard
@@ -99,24 +133,45 @@ export const Staking = () => {
                                 />
                             ))
                         ) : (
-                            <p>No NFTs staked</p>
+                            <p style={{ margin: "20px" }}>No NFTs staked</p>
                         )}
                     </div>
                 </div>
-                <hr style={styles.hr}/>
-                <StakeRewards />
+                <hr style={{
+                    width: "100%",
+                    border: "1px solid #333"
+                }}/>
+                <StakeRewards />  
 
                 {showIframe && (
-                    <div style={styles.iframeContainer}>
+                    <div style={{
+                        position: "fixed",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        backgroundColor: "#fff",
+                        padding: "20px",
+                        borderRadius: "10px",
+                        zIndex: 1000,
+                        width: "80%",
+                        height: "80%"
+                    }}>
                         <iframe
                             src="https://payments.thirdweb.com/checkout/2c6d3822-c285-4afc-bcb7-5ed95a06eb3c"
-                            style={styles.iframe}
+                            style={{ width: "100%", height: "100%", border: "none" }}
                         ></iframe>
                         <button
                             onClick={() => setShowIframe(false)}
-                            style={styles.closeButton}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#fc010190"}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}
+                            style={{
+                                position: "absolute",
+                                top: "10px",
+                                right: "10px",
+                                backgroundColor: "#333",
+                                color: "#fff",
+                                padding: "10px 20px",
+                                borderRadius: "10px",
+                                cursor: "pointer"
+                            }}
                         >
                             Close
                         </button>
@@ -127,80 +182,4 @@ export const Staking = () => {
     }
 
     return null;
-};
-
-const styles = {
-    container: {
-        display: "flex",
-        flexDirection: "column" as const,
-        alignItems: "center" as const,
-        backgroundColor: "#151515",
-        borderRadius: "8px",
-        width: "90%",
-        maxWidth: "500px",
-        padding: "20px",
-        margin: "0 auto",
-    },
-    header: {
-        display: "flex",
-        flexDirection: "row" as const,
-        alignItems: "center" as const,
-        justifyContent: "space-between" as const,
-        margin: "20px 0",
-        width: "100%"
-    },
-    planTitle: {
-        marginRight: "20px"
-    },
-    button: {
-        fontSize: "12px",
-        backgroundColor: "#333",
-        color: "#fff",
-        padding: "10px 20px",
-        borderRadius: "10px",
-        cursor: "pointer",
-        transition: "background-color 0.3s",
-    },
-    hr: {
-        width: "100%",
-        border: "1px solid #333"
-    },
-    section: {
-        margin: "20px 0",
-        width: "100%"
-    },
-    nftContainer: {
-        display: "flex",
-        flexDirection: "row" as const,
-        flexWrap: "wrap" as const,
-        width: "100%",
-        justifyContent: "center" as const,
-    },
-    iframeContainer: {
-        position: "fixed" as const,
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        backgroundColor: "#fff",
-        padding: "20px",
-        borderRadius: "10px",
-        zIndex: 1000,
-        width: "100%",
-        height: "40%"
-    },
-    iframe: {
-        width: "100%",
-        height: "100%",
-        border: "none" as const,
-    },
-    closeButton: {
-        position: "absolute" as const,
-        top: "10px",
-        right: "10px",
-        backgroundColor: "#333",
-        color: "#fff",
-        padding: "10px 20px",
-        borderRadius: "10px",
-        cursor: "pointer",
-    }
 };
