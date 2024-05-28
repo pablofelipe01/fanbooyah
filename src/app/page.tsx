@@ -22,7 +22,7 @@ export default function Home() {
 }
 
 const Page = styled.div`
-  background-image: url('/gif/bc.gif'); // Reemplaza con la ruta de tu imagen
+  background-image: url('/images/21.png'); // Reemplaza con la ruta de tu imagen
   background-size: cover; // Asegura que la imagen cubra todo el fondo
   background-position: center; // Centra la imagen
   background-repeat: no-repeat; // Evita que la imagen se repita
