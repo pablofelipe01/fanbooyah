@@ -147,10 +147,10 @@ const styles = {
         alignItems: "center" as const,
         justifyContent: "space-between" as const,
         margin: "20px 0",
-        width: "100%"
+        width: "100%",
     },
     planTitle: {
-        marginRight: "20px"
+        marginRight: "20px",
     },
     button: {
         fontSize: "12px",
@@ -163,11 +163,11 @@ const styles = {
     },
     hr: {
         width: "100%",
-        border: "1px solid #333"
+        border: "1px solid #333",
     },
     section: {
         margin: "20px 0",
-        width: "100%"
+        width: "100%",
     },
     nftContainer: {
         display: "flex",
@@ -178,15 +178,18 @@ const styles = {
     },
     iframeContainer: {
         position: "fixed" as const,
-        top: "50%",
+        top: "95%",
         left: "50%",
         transform: "translate(-50%, -50%)",
         backgroundColor: "#fff",
         padding: "20px",
         borderRadius: "10px",
         zIndex: 1000,
-        width: "600px",
-        height: "800px"
+        width: "90%",
+        height: "900px",
+        maxWidth: "600px",
+        maxHeight: "900px",
+        overflow: "hidden",
     },
     iframe: {
         width: "100%",
@@ -202,5 +205,15 @@ const styles = {
         padding: "10px 20px",
         borderRadius: "10px",
         cursor: "pointer",
-    }
+    },
+    '@media (max-width: 768px)': {
+        iframeContainer: {
+            width: "90%",
+            height: "70%",
+            padding: "10px",
+        },
+        iframe: {
+            height: "100%",
+        },
+    },
 };
