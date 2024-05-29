@@ -185,8 +185,8 @@ const styles = {
         padding: "20px",
         borderRadius: "10px",
         zIndex: 1000,
-        width: "100%",
-        height: "40%"
+        width: "600px",
+        height: "800px"
     },
     iframe: {
         width: "100%",
