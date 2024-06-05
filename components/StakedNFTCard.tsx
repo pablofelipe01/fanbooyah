@@ -1,41 +1,37 @@
 import { MediaRenderer, TransactionButton, useReadContract } from "thirdweb/react";
-import { NFT_CONTRACT, STAKING_CONTRACT } from "../utils/contracts";
 import { getNFT } from "thirdweb/extensions/erc721";
 import { client } from "@/app/client";
 import { prepareContractCall } from "thirdweb";
 
 type StakedNFTCardProps = {
     tokenId: bigint;
+    nftContract: any;
+    stakingContract: any;
     refetchStakedInfo: () => void;
     refetchOwnedNFTs: () => void;
 };
 
-export const StakedNFTCard: React.FC<StakedNFTCardProps> = ({ tokenId, refetchStakedInfo, refetchOwnedNFTs }) => {
+export const StakedNFTCard: React.FC<StakedNFTCardProps> = ({ tokenId, nftContract, stakingContract, refetchStakedInfo, refetchOwnedNFTs }) => {
     const { data: nft } = useReadContract(
         getNFT,
         {
-            contract: NFT_CONTRACT,
+            contract: nftContract,
             tokenId: tokenId,
         }
     );
     
     return (
-        <div style={{ margin: "10px" }}>
+        <div className="m-2.5">
             <MediaRenderer
                 client={client}
                 src={nft?.metadata.image}
-                style={{
-                    borderRadius: "10px",
-                    marginBottom: "10px",
-                    height: "200px",
-                    width: "200px"
-                }}
+                className="rounded-lg mb-2.5 h-50 w-50"
             />
-            <p style={{ margin: "0 10px 10px 10px"}}>{nft?.metadata.name}</p>
+            <p className="mx-2.5 mb-2.5">{nft?.metadata.name}</p>
             <TransactionButton
                 transaction={() => (
                     prepareContractCall({
-                        contract: STAKING_CONTRACT,
+                        contract: stakingContract,
                         method: "withdraw",
                         params: [[tokenId]]
                     })
@@ -45,17 +41,10 @@ export const StakedNFTCard: React.FC<StakedNFTCardProps> = ({ tokenId, refetchSt
                     refetchStakedInfo();
                     alert("Withdrawn!");
                 }}
-                style={{
-                    border: "none",
-                    backgroundColor: "#333",
-                    color: "#fff",
-                    padding: "10px",
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    width: "100%",
-                    fontSize: "12px"
-                }}
-            >Withdraw</TransactionButton>
+                className="border-none bg-gray-800 text-white p-2.5 rounded-lg cursor-pointer w-full text-xs"
+            >
+                Withdraw
+            </TransactionButton>
         </div>
-    )
+    );
 };

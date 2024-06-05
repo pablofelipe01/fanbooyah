@@ -1,29 +1,29 @@
 import { client } from "@/app/client";
 import { NFT, prepareContractCall } from "thirdweb";
 import { MediaRenderer, TransactionButton } from "thirdweb/react";
-import { NFT_CONTRACT, STAKING_CONTRACT } from "../utils/contracts";
 import { useState } from "react";
 import { approve } from "thirdweb/extensions/erc721";
 
 type OwnedNFTsProps = {
     nft: NFT;
+    nftContract: any;
+    stakingContract: any;
     refetchOwnedNFTs: () => void;
     refetchStakedInfo: () => void;
 };
 
-export const NFTCard = ({ nft, refetchOwnedNFTs, refetchStakedInfo }: OwnedNFTsProps) => {
+export const NFTCard = ({ nft, nftContract, stakingContract, refetchOwnedNFTs, refetchStakedInfo }: OwnedNFTsProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isApproved, setIsApproved] = useState(false);
 
     const handleStake = async () => {
         try {
-            console.log("Preparing to call stake method on contract", STAKING_CONTRACT);
+             // @ts-ignore
             const transaction = await prepareContractCall({
-                contract: STAKING_CONTRACT,
+                contract: stakingContract,
                 method: "stake",
                 params: [[nft.id]],
             });
-            console.log("Transaction prepared:", transaction);
             return transaction;
         } catch (error) {
             console.error("Error preparing contract call for stake method:", error);
@@ -32,89 +32,48 @@ export const NFTCard = ({ nft, refetchOwnedNFTs, refetchStakedInfo }: OwnedNFTsP
     };
 
     return (
-        <div style={{ margin: "10px" }}>
+        <div className="m-2.5">
             <MediaRenderer
                 client={client}
                 src={nft.metadata.image}
-                style={{
-                    borderRadius: "10px",
-                    marginBottom: "10px",
-                    height: "200px",
-                    width: "200px"
-                }}
+                className="rounded-lg mb-2.5 h-50 w-50"
             />
-            <p style={{ margin: "0 10px 10px 10px" }}>{nft.metadata.name}</p>
+            <p className="mx-2.5 mb-2.5">{nft.metadata.name}</p>
             <button
                 onClick={() => setIsModalOpen(true)}
-                style={{
-                    border: "none",
-                    backgroundColor: "#333",
-                    color: "#fff",
-                    padding: "10px",
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    width: "100%"
-                }}
-            >Stake</button>
+                className="border-none bg-gray-800 text-white p-2.5 rounded-lg cursor-pointer w-full"
+            >
+                Invest
+            </button>
             {isModalOpen && (
-                <div style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                    <div style={{
-                        minWidth: "300px",
-                        backgroundColor: "#222",
-                        padding: "20px",
-                        borderRadius: "10px",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center"
-                    }}>
-                        <div style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            width: "100%"
-                        }}>
-                            <button
-                                onClick={() => setIsModalOpen(false)}
-                                style={{
-                                    border: "none",
-                                    backgroundColor: "transparent",
-                                    color: "#fff",
-                                    cursor: "pointer"
-                                }}
-                            >Close</button>
-                        </div>
-                        <h3 style={{ margin: "10px 0" }}>You are about to stake:</h3>
+                <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-gray-900 p-5 rounded-lg flex flex-col items-center w-11/12 max-w-lg relative">
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute top-2 right-2 bg-gray-800 text-white py-1 px-2 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
+                        >
+                            Close
+                        </button>
+                        <h3 className="my-2.5 text-white">You are about to stake:</h3>
                         <MediaRenderer
                             client={client}
                             src={nft.metadata.image}
-                            style={{
-                                borderRadius: "10px",
-                                marginBottom: "10px"
-                            }}
+                            className="rounded-lg mb-2.5"
                         />
                         {!isApproved ? (
                             <TransactionButton
                                 transaction={() => (
                                     approve({
-                                        contract: NFT_CONTRACT,
-                                        to: STAKING_CONTRACT.address,
+                                        contract: nftContract,
+                                        to: stakingContract.address,
                                         tokenId: nft.id
                                     })
                                 )}
-                                style={{
-                                    width: "100%"
-                                }}
+                                className="w-full bg-blue-600 text-white p-2.5 rounded-lg cursor-pointer transition-colors hover:bg-blue-500"
                                 onTransactionConfirmed={() => setIsApproved(true)}
-                            >Approve</TransactionButton>
+                            >
+                                Approve
+                            </TransactionButton>
                         ) : (
                             <TransactionButton
                                 transaction={handleStake}
@@ -124,10 +83,10 @@ export const NFTCard = ({ nft, refetchOwnedNFTs, refetchStakedInfo }: OwnedNFTsP
                                     refetchOwnedNFTs();
                                     refetchStakedInfo();
                                 }}
-                                style={{
-                                    width: "100%"
-                                }}
-                            >Stake</TransactionButton>
+                                className="w-full bg-green-600 text-white p-2.5 rounded-lg cursor-pointer transition-colors hover:bg-green-500"
+                            >
+                                Rent
+                            </TransactionButton>
                         )}
                     </div>
                 </div>

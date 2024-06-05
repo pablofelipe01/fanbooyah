@@ -2,218 +2,279 @@
 
 import { chain } from "@/app/chain";
 import { client } from "@/app/client";
-import { ConnectButton, TransactionButton, useActiveAccount, useReadContract } from "thirdweb/react";
-import { StakeRewards } from "./StakeRewards";
-import { NFT_CONTRACT, STAKING_CONTRACT } from "../utils/contracts";
+import { useActiveAccount, useReadContract } from "thirdweb/react";
 import { NFT } from "thirdweb";
 import { useEffect, useState } from "react";
-import { claimTo, getNFTs, ownerOf, totalSupply } from "thirdweb/extensions/erc721";
-import { NFTCard } from "./NFTCard";
-import { StakedNFTCard } from "./StakedNFTCard";
+import { FaInstagram, FaTwitter, FaTiktok } from 'react-icons/fa';
+// @ts-ignore 
+import { StakingData } from "../../utils/data";
+import { getNFTs, ownerOf, totalSupply } from "thirdweb/extensions/erc721";
+import dynamic from 'next/dynamic';
+import { getContract } from "thirdweb";
+import { stakingABI } from "../utils/stakingABI"; // Adjusted path
 
-export const Staking = () => {
-    const account = useActiveAccount();
-    const [ownedNFTs, setOwnedNFTs] = useState<NFT[]>([]);
-    const [showIframe, setShowIframe] = useState(false);
+type StakingProps = {
+  data: StakingData;
+};
 
-    const getOwnedNFTs = async () => {
-        let ownedNFTs: NFT[] = [];
+const NFTCard = dynamic(() => import("./NFTCard").then(mod => mod.NFTCard));
+const StakedNFTCard = dynamic(() => import("./StakedNFTCard").then(mod => mod.StakedNFTCard));
+const StakeRewards = dynamic(() => import("./StakeRewards").then(mod => mod.StakeRewards));
 
-        const totalNFTSupply = await totalSupply({
-            contract: NFT_CONTRACT,
-        });
-        const nfts = await getNFTs({
-            contract: NFT_CONTRACT,
-            start: 0,
-            count: parseInt(totalNFTSupply.toString()),
-        });
+const Staking = ({ data }: StakingProps) => {
+  const account = useActiveAccount();
+  const [ownedNFS, setOwnedNFS] = useState<NFT[]>([]);
+  const [showIframe, setShowIframe] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState('');
+  const [fullView, setFullView] = useState(false);
 
-        for (let nft of nfts) {
-            const owner = await ownerOf({
-                contract: NFT_CONTRACT,
-                tokenId: nft.id,
-            });
-            if (owner === account?.address) {
-                ownedNFTs.push(nft);
-            }
-        }
-        setOwnedNFTs(ownedNFTs);
-    };
+  const NFT_CONTRACT = getContract({
+    client: client,
+    chain: chain,
+    address: data.nftContractAddress
+  });
 
-    useEffect(() => {
-        if (account) {
-            getOwnedNFTs();
-        }
-    }, [account]);
+  const REWARD_TOKEN_CONTRACT = getContract({
+    client: client,
+    chain: chain,
+    address: data.rewardTokenContractAddress
+  });
 
-    const {
-        data: stakedInfo,
-        refetch: refetchStakedInfo,
-    } = useReadContract({
-        contract: STAKING_CONTRACT,
-        method: "getStakeInfo",
-        params: [account?.address || ""],
+  const STAKING_CONTRACT = getContract({
+    client: client,
+    chain: chain,
+    address: data.stakingContractAddress,
+    abi: stakingABI
+  });
+
+  const getOwnedNFS = async () => {
+    let ownedNFS: NFT[] = [];
+
+    const totalNFSSupply = await totalSupply({
+      contract: NFT_CONTRACT,
+    });
+    const nfs = await getNFTs({
+      contract: NFT_CONTRACT,
+      start: 0,
+      count: parseInt(totalNFSSupply.toString()),
     });
 
-    if (account) {
-        return (
-            <div style={styles.container}>
-                <div style={styles.header}>
-                    <h2 style={styles.planTitle}>Plan Bronze</h2>
-                    <button
-                        onClick={() => setShowIframe(true)}
-                        style={styles.button}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#03f73c"}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}
-                    >Comprar</button>
-                </div>
-                <hr style={styles.hr}/>
-                <div style={styles.section}>
-                    <h2>Owned NFTs</h2>
-                    <div style={styles.nftContainer}>
-                        {ownedNFTs && ownedNFTs.length > 0 ? (
-                            ownedNFTs.map((nft) => (
-                                <NFTCard
-                                    key={nft.id}
-                                    nft={nft}
-                                    refetchOwnedNFTs={getOwnedNFTs}
-                                    refetchStakedInfo={refetchStakedInfo}
-                                />
-                            ))
-                        ) : (
-                            <p>You own 0 NFTs</p>
-                        )}
-                    </div>
-                </div>
-                <hr style={styles.hr}/>
-                <div style={styles.section}>
-                    <h2>Staked NFTs</h2>
-                    <div style={styles.nftContainer}>
-                        {stakedInfo && stakedInfo[0].length > 0 ? (
-                            stakedInfo[0].map((nft: any, index: number) => (
-                                <StakedNFTCard
-                                    key={index}
-                                    tokenId={nft}
-                                    refetchStakedInfo={refetchStakedInfo}
-                                    refetchOwnedNFTs={getOwnedNFTs}
-                                />
-                            ))
-                        ) : (
-                            <p>No NFTs staked</p>
-                        )}
-                    </div>
-                </div>
-                <hr style={styles.hr}/>
-                <StakeRewards />
-
-                {showIframe && (
-                    <div style={styles.iframeContainer}>
-                        <iframe
-                            src="https://payments.thirdweb.com/checkout/2c6d3822-c285-4afc-bcb7-5ed95a06eb3c"
-                            style={styles.iframe}
-                        ></iframe>
-                        <button
-                            onClick={() => setShowIframe(false)}
-                            style={styles.closeButton}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#fc010190"}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}
-                        >
-                            Close
-                        </button>
-                    </div>
-                )}
-            </div>
-        );
+    for (let nfsItem of nfs) {
+      const owner = await ownerOf({
+        contract: NFT_CONTRACT,
+        tokenId: nfsItem.id,
+      });
+      if (owner === account?.address) {
+        ownedNFS.push(nfsItem);
+      }
     }
+    setOwnedNFS(ownedNFS);
+  };
 
-    return null;
+  useEffect(() => {
+    if (account) {
+      getOwnedNFS();
+    }
+  }, [account]);
+
+  const {
+    data: stakedInfo,
+    refetch: refetchStakedInfo,
+  } = useReadContract({
+    contract: STAKING_CONTRACT,
+    method: "getStakeInfo",
+    params: [account?.address || ""],
+  });
+
+  const handleSocialClick = (url: string) => {
+    window.open(url, "_blank");
+  };
+
+  const formatFollowers = (followers: number) => {
+    if (followers >= 1000000) {
+      return (followers / 1000000).toFixed(1).replace('.', ',') + ' Mill';
+    }
+    if (followers >= 1000) {
+      return (followers / 1000).toFixed(1).replace('.', ',') + ' K';
+    }
+    return followers.toString();
+  };
+
+  const handleBuyClick = () => {
+    setIframeSrc(data.buyLink);
+    setShowIframe(true);
+  };
+
+  const handleSellClick = () => {
+    setIframeSrc(data.sellLink);
+    setShowIframe(true);
+  };
+
+  const renderSmallView = () => (
+    <div className="relative flex flex-col items-center rounded-lg w-10/12 max-w-xs p-4 mx-auto text-white border border-blue-300 border-opacity-50">
+      <div className="flex flex-row items-center justify-between my-3 w-full">
+        <div className="flex items-center">
+          <img 
+            src={data.imgUrl} 
+            alt="Creator" 
+            className="h-10 w-10 rounded-full object-cover mr-3"
+          />
+          <h2 className="text-lg font-bold">{data.creatorName}</h2>
+        </div>
+        <div className="flex space-x-2">
+          <button
+            className="text-xs bg-gray-600 text-white py-1 px-3 rounded-lg cursor-not-allowed"
+            disabled
+          >
+            BUY
+          </button>
+          <button
+            className="text-xs bg-gray-600 text-white py-1 px-3 rounded-lg cursor-not-allowed"
+            disabled
+          >
+            SELL
+          </button>
+        </div>
+      </div>
+      <p className="text-center text-sm mb-3">{data.description}</p>
+      <hr className="w-full border-gray-800"/>
+      <div className="text-center text-sm mb-3">
+        <h3 className="text-md font-semibold">Token Symbol: {data.tokenSymbol}</h3>
+        <p>ROI: {data.roi}</p>
+        <p>Token Price: {data.tokenPrice}</p>
+        <p>Liquidity: {data.liquidity}</p>
+        <p>20% of creator income goes to liquidity</p>
+      </div>
+      <button
+        onClick={() => setFullView(true)}
+        className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"
+      >
+        Full Information
+      </button>
+    </div>
+  );
+
+  const renderFullView = () => (
+    <div className="relative flex flex-col items-center rounded-lg w-10/12 max-w-5xl p-4 mx-auto text-white border border-blue-300 border-opacity-50">
+      <div className="flex flex-row items-center justify-between my-3 w-full">
+        <div className="flex items-center">
+          <img 
+            src={data.imgUrl} 
+            alt="Creator" 
+            className="h-10 w-10 rounded-full object-cover mr-3"
+          />
+          <h2 className="text-lg font-bold">{data.creatorName}</h2>
+        </div>
+        <div className="flex space-x-2">
+          <button
+            onClick={handleBuyClick}
+            className="text-xs bg-green-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-green-500"
+          >
+            BUY
+          </button>
+          <button
+            onClick={handleSellClick}
+            className="text-xs bg-red-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
+          >
+            SELL
+          </button>
+        </div>
+      </div>
+      <p className="text-center text-sm mb-3">{data.description}</p>
+      <hr className="w-full border-gray-800"/>
+      <div className="text-center text-sm mb-3">
+        <h3 className="text-md font-semibold">Token Symbol: {data.tokenSymbol}</h3>
+        <p>ROI: {data.roi}</p>
+        <p>Token Price: {data.tokenPrice}</p>
+        <p>Liquidity: {data.liquidity}</p>
+        <p>20% of creator income goes to liquidity</p>
+      </div>
+      <hr className="w-full border-gray-800"/>
+      <div className="bg-white bg-opacity-10 p-3 rounded-lg shadow-lg mb-3 w-full">
+        <h3 className="text-md font-semibold mb-1">Impact in Social Media</h3>
+        <div className="flex flex-col space-y-2 text-sm">
+         {/* @ts-ignore */}
+          {data.socialMedia.map((social, index) => (
+            <button key={index} onClick={() => handleSocialClick(social.url)} className="flex items-center space-x-1">
+              {social.platform === "Instagram" && <FaInstagram className="w-5 h-5" />}
+              {social.platform === "X" && <FaTwitter className="w-5 h-5" />}
+              {social.platform === "TikTok" && <FaTiktok className="w-5 h-5" />}
+              <span>{social.platform} - {formatFollowers(social.followers)} followers</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <hr className="w-full border-gray-800"/>
+      <div className="my-3 w-full text-sm">
+        <h2 className="text-md font-semibold mb-2">Owned NFS</h2>
+        <div className="flex flex-row flex-wrap justify-center w-full">
+          {ownedNFS && ownedNFS.length > 0 ? (
+            ownedNFS.map((nfsItem) => (
+              <NFTCard
+                key={nfsItem.id}
+                nft={nfsItem}
+                nftContract={NFT_CONTRACT}
+                stakingContract={STAKING_CONTRACT}
+                refetchOwnedNFTs={getOwnedNFS}
+                refetchStakedInfo={refetchStakedInfo}
+              />
+            ))
+          ) : (
+            <p>You own 0 NFS</p>
+          )}
+        </div>
+      </div>
+      <hr className="w-full border-gray-800"/>
+      <div className="my-3 w-full text-sm">
+        <h2 className="text-md font-semibold mb-2">Allocated NFS</h2>
+        <div className="flex flex-row flex-wrap justify-center w-full">
+          {stakedInfo && stakedInfo[0].length > 0 ? (
+            stakedInfo[0].map((nfsItem: any, index: number) => (
+              <StakedNFTCard
+                key={index}
+                tokenId={nfsItem}
+                nftContract={NFT_CONTRACT}
+                stakingContract={STAKING_CONTRACT}
+                refetchStakedInfo={refetchStakedInfo}
+                refetchOwnedNFTs={getOwnedNFS}
+              />
+            ))
+          ) : (
+            <p>No NFS allocated</p>
+          )}
+        </div>
+      </div>
+      <hr className="w-full border-gray-800"/>
+      <StakeRewards rewardTokenContract={REWARD_TOKEN_CONTRACT} stakingContract={STAKING_CONTRACT} />
+
+      {showIframe && (
+        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-80 p-5 rounded-lg z-50 w-11/12 h-[90vh] max-w-5xl overflow-hidden shadow-lg">
+          <iframe
+            src={iframeSrc}
+            className="w-full h-full border-none"
+          ></iframe>
+          <button
+            onClick={() => setShowIframe(false)}
+            className="absolute top-2 right-2 bg-gray-800 text-white py-2 px-5 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
+          >
+            Close
+          </button>
+        </div>
+      )}
+      <button
+        onClick={() => setFullView(false)}
+        className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"
+      >
+        Close Full Information
+      </button>
+    </div>
+  );
+
+  if (account) {
+    return fullView ? renderFullView() : renderSmallView();
+  }
+
+  return null;
 };
 
-const styles = {
-    container: {
-        display: "flex",
-        flexDirection: "column" as const,
-        alignItems: "center" as const,
-        backgroundColor: "#151515",
-        borderRadius: "8px",
-        width: "90%",
-        maxWidth: "500px",
-        padding: "20px",
-        margin: "0 auto",
-    },
-    header: {
-        display: "flex",
-        flexDirection: "row" as const,
-        alignItems: "center" as const,
-        justifyContent: "space-between" as const,
-        margin: "20px 0",
-        width: "100%",
-    },
-    planTitle: {
-        marginRight: "20px",
-    },
-    button: {
-        fontSize: "12px",
-        backgroundColor: "#333",
-        color: "#fff",
-        padding: "10px 20px",
-        borderRadius: "10px",
-        cursor: "pointer",
-        transition: "background-color 0.3s",
-    },
-    hr: {
-        width: "100%",
-        border: "1px solid #333",
-    },
-    section: {
-        margin: "20px 0",
-        width: "100%",
-    },
-    nftContainer: {
-        display: "flex",
-        flexDirection: "row" as const,
-        flexWrap: "wrap" as const,
-        width: "100%",
-        justifyContent: "center" as const,
-    },
-    iframeContainer: {
-        position: "fixed" as const,
-        top: "95%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        backgroundColor: "#fff",
-        padding: "20px",
-        borderRadius: "10px",
-        zIndex: 1000,
-        width: "90%",
-        height: "900px",
-        maxWidth: "600px",
-        maxHeight: "900px",
-        overflow: "hidden",
-    },
-    iframe: {
-        width: "100%",
-        height: "100%",
-        border: "none" as const,
-    },
-    closeButton: {
-        position: "absolute" as const,
-        top: "10px",
-        right: "10px",
-        backgroundColor: "#333",
-        color: "#fff",
-        padding: "10px 20px",
-        borderRadius: "10px",
-        cursor: "pointer",
-    },
-    '@media (max-width: 768px)': {
-        iframeContainer: {
-            width: "90%",
-            height: "70%",
-            padding: "10px",
-        },
-        iframe: {
-            height: "100%",
-        },
-    },
-};
+export default Staking;

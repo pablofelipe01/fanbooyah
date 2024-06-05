@@ -1,10 +1,14 @@
 import { TransactionButton, useActiveAccount, useReadContract } from "thirdweb/react";
-import { REWARD_TOKEN_CONTRACT, STAKING_CONTRACT } from "../utils/contracts";
 import { prepareContractCall, toEther } from "thirdweb";
 import { useEffect } from "react";
 import { balanceOf } from "thirdweb/extensions/erc721";
 
-export const StakeRewards = () => {
+type StakeRewardsProps = {
+    rewardTokenContract: any;
+    stakingContract: any;
+};
+
+export const StakeRewards: React.FC<StakeRewardsProps> = ({ rewardTokenContract, stakingContract }) => {
     const account = useActiveAccount();
 
     const {
@@ -14,16 +18,18 @@ export const StakeRewards = () => {
     } = useReadContract(
         balanceOf,
         {
-            contract: REWARD_TOKEN_CONTRACT,
+            contract: rewardTokenContract,
             owner: account?.address || "",
         }
-    )
-    
+    );
+
+    // @ts-ignore
     const {
         data: stakedInfo,
         refetch: refetchStakedInfo,
+        // @ts-ignore 
     } = useReadContract({
-        contract: STAKING_CONTRACT,
+        contract: stakingContract,
         method: "getStakeInfo",
         params: [account?.address || ""],
     });
@@ -37,34 +43,30 @@ export const StakeRewards = () => {
     }, []);
 
     return (
-        <div style={{ width: "100%", margin: "20px 0", display: "flex", flexDirection: "column" }}>
+        <div className="w-full my-5 flex flex-col">
             {!isTokenBalanceLoading && (
                 <p>Wallet Balance: {toEther(BigInt(tokenBalance!.toString()))}</p>
             )}
-            <h2 style={{ marginBottom: "20px"}}>Stake Rewards: {stakedInfo && toEther(BigInt(stakedInfo[1].toString()))}</h2>
+
+            {/* @ts-ignore */}
+            <h2 className="mb-5">Stake Rewards: {stakedInfo && toEther(BigInt(stakedInfo[1].toString()))}</h2>
+
             <TransactionButton
                 transaction={() => (
                     prepareContractCall({
-                        contract:STAKING_CONTRACT,
+                        contract: stakingContract,
                         method: "claimRewards",
                     })
                 )}
                 onTransactionConfirmed={() => {
-                    alert("Rewards claimed!")
+                    alert("Rewards claimed!");
                     refetchStakedInfo();
                     refetchTokenBalance();
                 }}
-                style={{
-                    border: "none",
-                    backgroundColor: "#333",
-                    color: "#fff",
-                    padding: "10px",
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    width: "100%",
-                    fontSize: "12px"
-                }}
-            >Claim Rewards</TransactionButton>
+                className="border-none bg-gray-800 text-white p-2.5 rounded-lg cursor-pointer w-full text-xs"
+            >
+                Claim Rewards
+            </TransactionButton>
         </div>
-    )
+    );
 };
