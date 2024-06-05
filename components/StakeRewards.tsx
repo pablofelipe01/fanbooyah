@@ -49,7 +49,7 @@ export const StakeRewards: React.FC<StakeRewardsProps> = ({ rewardTokenContract,
             )}
 
             {/* @ts-ignore */}
-            <h2 className="mb-5">Stake Rewards: {stakedInfo && toEther(BigInt(stakedInfo[1].toString()))}</h2>
+            <h2 className="mb-5">Rewards: {stakedInfo && toEther(BigInt(stakedInfo[1].toString()))}</h2>
 
             <TransactionButton
                 transaction={() => (

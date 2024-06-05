@@ -2,24 +2,24 @@
 
 import { chain } from "@/app/chain";
 import { client } from "@/app/client";
-import { useActiveAccount, useReadContract, TransactionButton } from "thirdweb/react";
+import { useActiveAccount, useReadContract } from "thirdweb/react";
 import { NFT } from "thirdweb";
 import { useEffect, useState } from "react";
 import { FaInstagram, FaTwitter, FaTiktok } from 'react-icons/fa';
-import { getNFTs, ownerOf, totalSupply, claimTo } from "thirdweb/extensions/erc721";
+// @ts-ignore 
+import { StakingData } from "../../utils/data";
+import { getNFTs, ownerOf, totalSupply } from "thirdweb/extensions/erc721";
 import dynamic from 'next/dynamic';
 import { getContract } from "thirdweb";
-import { stakingABI } from "../utils/stakingABI";
-// @ts-ignore 
-import { StakingData, stakingData } from "../../utils/data";
-
-const NFTCard = dynamic(() => import("./NFTCard").then(mod => mod.NFTCard));
-const StakedNFTCard = dynamic(() => import("./StakedNFTCard").then(mod => mod.StakedNFTCard));
-const StakeRewards = dynamic(() => import("./StakeRewards").then(mod => mod.StakeRewards));
+import { stakingABI } from "../utils/stakingABI"; // Adjusted path
 
 type StakingProps = {
   data: StakingData;
 };
+
+const NFTCard = dynamic(() => import("./NFTCard").then(mod => mod.NFTCard));
+const StakedNFTCard = dynamic(() => import("./StakedNFTCard").then(mod => mod.StakedNFTCard));
+const StakeRewards = dynamic(() => import("./StakeRewards").then(mod => mod.StakeRewards));
 
 const Staking = ({ data }: StakingProps) => {
   const account = useActiveAccount();
@@ -101,7 +101,8 @@ const Staking = ({ data }: StakingProps) => {
   };
 
   const handleBuyClick = () => {
-    // No need to set iframe for buying NFT directly using TransactionButton
+    setIframeSrc(data.buyLink);
+    setShowIframe(true);
   };
 
   const handleSellClick = () => {
@@ -118,33 +119,23 @@ const Staking = ({ data }: StakingProps) => {
             alt="Creator" 
             className="h-10 w-10 rounded-full object-cover mr-3"
           />
+          <h2 className="text-lg font-bold">{data.creatorName}</h2>
         </div>
         <div className="flex space-x-2">
-          <TransactionButton
-            transaction={() => (
-              claimTo({
-                contract: NFT_CONTRACT,
-                to: account?.address || "",
-                quantity: BigInt(1)
-              })
-            )}
-            onTransactionConfirmed={() => {
-              alert("NFT bought!");
-              getOwnedNFS();
-            }}
-            className="text-xs bg-green-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-green-500"
+          <button
+            className="text-xs bg-gray-600 text-white py-1 px-3 rounded-lg cursor-not-allowed"
+            disabled
           >
             BUY
-          </TransactionButton>
+          </button>
           <button
-            onClick={handleSellClick}
-            className="text-xs bg-red-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
+            className="text-xs bg-gray-600 text-white py-1 px-3 rounded-lg cursor-not-allowed"
+            disabled
           >
             SELL
           </button>
         </div>
       </div>
-      <h2 className="text-lg font-bold">{data.creatorName}</h2>
       <p className="text-center text-sm mb-3">{data.description}</p>
       <hr className="w-full border-gray-800"/>
       <div className="text-center text-sm mb-3">
@@ -172,24 +163,15 @@ const Staking = ({ data }: StakingProps) => {
             alt="Creator" 
             className="h-10 w-10 rounded-full object-cover mr-3"
           />
+          <h2 className="text-lg font-bold">{data.creatorName}</h2>
         </div>
         <div className="flex space-x-2">
-          <TransactionButton
-            transaction={() => (
-              claimTo({
-                contract: NFT_CONTRACT,
-                to: account?.address || "",
-                quantity: BigInt(1)
-              })
-            )}
-            onTransactionConfirmed={() => {
-              alert("NFT bought!");
-              getOwnedNFS();
-            }}
+          <button
+            onClick={handleBuyClick}
             className="text-xs bg-green-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-green-500"
           >
             BUY
-          </TransactionButton>
+          </button>
           <button
             onClick={handleSellClick}
             className="text-xs bg-red-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
@@ -198,7 +180,6 @@ const Staking = ({ data }: StakingProps) => {
           </button>
         </div>
       </div>
-      <h2 className="text-lg font-bold">{data.creatorName}</h2>
       <p className="text-center text-sm mb-3">{data.description}</p>
       <hr className="w-full border-gray-800"/>
       <div className="text-center text-sm mb-3">
@@ -212,7 +193,7 @@ const Staking = ({ data }: StakingProps) => {
       <div className="bg-white bg-opacity-10 p-3 rounded-lg shadow-lg mb-3 w-full">
         <h3 className="text-md font-semibold mb-1">Impact in Social Media</h3>
         <div className="flex flex-col space-y-2 text-sm">
-        {/* @ts-ignore */}
+        
           {data.socialMedia.map((social, index) => (
             <button key={index} onClick={() => handleSocialClick(social.url)} className="flex items-center space-x-1">
               {social.platform === "Instagram" && <FaInstagram className="w-5 h-5" />}
