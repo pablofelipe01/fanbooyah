@@ -25,8 +25,8 @@ const Blog = () => {
             ></iframe>
           </div>
         </div>
-      </main>
       <Footer />
+      </main>
     </div>
   );
 };
