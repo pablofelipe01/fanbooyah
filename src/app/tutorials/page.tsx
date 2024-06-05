@@ -15,15 +15,21 @@ const Tutorials = () => {
       <main className="relative py-16 px-4 flex-grow pt-24"> {/* Adjusted padding top */}
         <h1 className="text-4xl font-bold text-white mb-6 text-center">Videos & Tutorials</h1>
         <div className="flex justify-center">
-          <video
-            controls
-            className="w-full max-w-3xl rounded-lg shadow-lg"
-          >
-            <source src="/videos/video2.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <div style={{ maxWidth: '854px', width: '100%' }}>
+            <div style={{ position: 'relative', height: 0, paddingBottom: '56.25%' }}>
+              <iframe 
+                src="https://embed.ted.com/talks/lang/en/adam_mosseri_a_creator_led_internet_built_on_blockchain" 
+                width="854" 
+                height="480" 
+                style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }} 
+                frameBorder="0" 
+                scrolling="no" 
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
         </div>
-      <Footer />
+        <Footer />
       </main>
     </div>
   );
