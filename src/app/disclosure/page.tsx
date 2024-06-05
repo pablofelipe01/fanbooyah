@@ -36,7 +36,7 @@ const Disclosure = () => {
           
           <h2 className="text-2xl font-semibold mt-6">No Guarantees</h2>
           <p className="mt-4">
-            True Social Token makes no guarantees regarding the accuracy, completeness, or timeliness of the information provided on the platform. All content and services are provided "as is" without warranty of any kind, either express or implied.
+            True Social Token, makes no guarantees regarding the accuracy, completeness, or timeliness of the information provided on the platform. All content and services are provided "as is" without warranty of any kind, either express or implied.
           </p>
           
           <h2 className="text-2xl font-semibold mt-6">User Responsibility</h2>
