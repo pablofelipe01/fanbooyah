@@ -24,7 +24,7 @@ const About = () => {
             We help content creators thrive by monetizing their communities through a revolutionary Web3 Token Membership model. As creators succeed, we ensure they and their communities receive financial compensation, incentivizing their collective success.
           </p>
 
-          <h2 className="text-2xl font-semibold mt-6">Our History</h2>
+          <h2 className="text-2xl font-semibold mt-6">Why</h2>
           <p className="mt-4">
             History has consistently demonstrated that technology shifts power away from entrenched institutions and places it directly into the hands of individuals. The original vision of the Internet was to decentralize power, placing it directly in the hands of individuals. This concentration of power in the hands of a few platforms is unlikely to be a sustainable trend. In the coming years, we will witness a significant shift in power from platforms to a group known as content creators.
           </p>
