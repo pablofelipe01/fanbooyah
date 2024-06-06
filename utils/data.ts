@@ -76,7 +76,7 @@ export const stakingData: StakingData[] = [
     socialMedia: [
       { platform: "Instagram", url: "https://instagram.com", followers: 16500 },
       { platform: "X", url: "https://twitter.com", followers: 0 },
-      { platform: "TikTok", url: "https://tiktok.com", followers: 0 },
+      { platform: "TikTok", url: "https://tiktok.com", followers: 0  },
     ],
     infoImgUrl: "/images/xpo1.png", // New image field
   },

@@ -50,6 +50,11 @@ export const NavBar = () => {
               Global
             </button>
           </div>
+          <Link href="/pricing" legacyBehavior>
+            <a className="hidden md:block focus:outline-none bg-green-600 text-white py-1 px-3 rounded-lg hover:bg-green-500 transition-colors">
+              Pricing
+            </a>
+          </Link>
           <ConnectButton 
             client={client} 
             chain={chain} 
@@ -87,6 +92,11 @@ export const NavBar = () => {
             >
               Global
             </button>
+            <Link href="/pricing" legacyBehavior>
+              <a className="block text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 transition-colors mb-2">
+                Pricing
+              </a>
+            </Link>
           </div>
         )}
       </nav>
