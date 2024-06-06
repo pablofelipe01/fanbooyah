@@ -148,11 +148,12 @@ const Staking = ({ data }: StakingProps) => {
       <p className="text-center text-sm mb-3">{data.description}</p>
       <hr className="w-full border-gray-800"/>
       <div className="text-center text-sm mb-3">
-        <h3 className="text-md font-semibold">Token Symbol: {data.tokenSymbol}</h3>
-        <p>ROI: {data.roi}</p>
-        <p>Token Price: {data.tokenPrice}</p>
+        <h3 className="text-md font-semibold">Symbol: {data.tokenSymbol}</h3>
+        {/* <p>ROI: {data.roi}</p> */}
+        <p>Price: {data.tokenPrice}</p>
         <p>Liquidity: {data.liquidity}</p>
         <p>20% of creator income goes to liquidity</p>
+        <img src={data.infoImgUrl} alt="Info" className="mt-2"/>
       </div>
       <button
         onClick={() => setFullView(true)}
@@ -207,6 +208,7 @@ const Staking = ({ data }: StakingProps) => {
         <p>Token Price: {data.tokenPrice}</p>
         <p>Liquidity: {data.liquidity}</p>
         <p>20% of creator income goes to liquidity</p>
+        <img src={data.infoImgUrl} alt="Info" className="mt-2"/>
       </div>
       <hr className="w-full border-gray-800"/>
       <div className="bg-white bg-opacity-10 p-3 rounded-lg shadow-lg mb-3 w-full">
