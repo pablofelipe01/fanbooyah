@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { NavBar } from "../../components/NavBar";
-import Footer from "../../components/Footer"; // Ensure this is the correct path and import style
+import Footer from "../../components/Footer";
+import CookieConsent from "../../components/CookieConsent"; // Ensure this is the correct path and import style
 import { ConnectButton } from "@/app/thirdweb";
 import { chain } from "@/app/chain";
 import { client } from "@/app/client"; 
@@ -104,10 +105,8 @@ const Home = () => {
             </button>
           </div>
         )}
-        {!isStakingVisible && (
-           <div></div>
-        )}
         <Footer />
+        <CookieConsent /> {/* Include the CookieConsent component here */}
       </main>
     </div>
   );
