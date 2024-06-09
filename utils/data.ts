@@ -37,7 +37,7 @@ export const stakingData: StakingData[] = [
       { platform: "X", url: "https://x.com/Manuelavillegas", followers: 12800 },
       { platform: "TikTok", url: "https://www.tiktok.com/@manuelavillegasjaramillo?lang=en", followers: 82000 },
     ],
-    infoImgUrl: "/images/manu1.png", // New image field
+    infoImgUrl: "/images/manu.png", // New image field
   },
    // @ts-ignore
   {
