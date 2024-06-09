@@ -23,7 +23,7 @@ export const stakingData: StakingData[] = [
     creatorName: "Manuela Villegas",
     description: "CFull Stack Marketer | CEO @SI SEÑOR MARTECH | TOP VOICE LINKEDIN | Women to Watch | Host TED Circle",
     imgUrl: "/images/manu2.png",
-    tokenSymbol: "GF",
+    tokenSymbol: "AZUL",
    
     tokenPrice: "1 MATIC",
     liquidity: " USDC",
