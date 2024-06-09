@@ -51,11 +51,11 @@ export const stakingData: StakingData[] = [
     rewardTokenContractAddress: "0x64C89745E4F49825421b84abd8995A2f5A627eba",
     stakingContractAddress: "0x35fC8fb58121fDf52CB938d724C6DF2592bbF27d",
     buyLink: "https://payments.thirdweb.com/checkout/2c6d3822-c285-4afc-bcb7-5ed95a06eb3c",
-    sellLink: "https://dex-social.vercel.app/",
+    sellLink: "https://fit-dex.vercel.app/",
     socialMedia: [
-      { platform: "Instagram", url: "https://instagram.com", followers: 12000 },
+      { platform: "Instagram", url: "https://www.instagram.com/elgorditofitofficial/", followers: 12000 },
       { platform: "X", url: "https://twitter.com", followers: 6500 },
-      { platform: "TikTok", url: "https://tiktok.com", followers: 26000 },
+      { platform: "TikTok", url: "https://www.tiktok.com/@elgorditofit?lang=en", followers: 26000 },
     ],
     infoImgUrl: "/images/fit2.png", // New image field
   },
@@ -74,7 +74,7 @@ export const stakingData: StakingData[] = [
     buyLink: "https://payments.thirdweb.com/checkout/2c6d3822-c285-4afc-bcb7-5ed95a06eb3c",
     sellLink: "https://dex-social.vercel.app/",
     socialMedia: [
-      { platform: "Instagram", url: "https://instagram.com", followers: 16500 },
+      { platform: "Instagram", url: "https://www.instagram.com/xportiva/", followers: 16500 },
       { platform: "X", url: "https://twitter.com", followers: 0 },
       { platform: "TikTok", url: "https://tiktok.com", followers: 0  },
     ],
