@@ -39,6 +39,7 @@ export const stakingData: StakingData[] = [
     ],
     infoImgUrl: "/images/manu1.png", // New image field
   },
+   // @ts-ignore
   {
     creatorName: "Gordito Fitt",
     description: "Como Baje 40 kilos de gordo a fit",
