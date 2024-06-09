@@ -21,7 +21,7 @@ export const stakingData: StakingData[] = [
   // @ts-ignore
   {
     creatorName: "Manuela Villegas",
-    description: "Como Baje 40 kilos de gordo a fit",
+    description: "CFull Stack Marketer | CEO @SI SEÑOR MARTECH | TOP VOICE LINKEDIN | Women to Watch | Host TED Circle",
     imgUrl: "/images/manu2.png",
     tokenSymbol: "GF",
    
