@@ -13,6 +13,7 @@
     "@crossmint/client-sdk-react-ui": "^1.1.9",
     "@heroicons/react": "^1.0.6",
     "@types/styled-components": "^5.1.34",
+    "ethers": "^6.13.0",
     "mongodb": "^6.7.0",
     "next": "14.2.3",
     "next-themes": "^0.3.0",

@@ -65,12 +65,19 @@ const Home = () => {
               </div>
             </div>
             <div className="flex space-x-4">
-              <ConnectButton 
-                client={client} 
-                chain={chain} 
-                theme={"dark"}
-                connectModal={{ size: "compact" }}
-              />
+            <ConnectButton 
+            client={client} 
+            chain={chain} 
+            theme={"dark"}
+            connectButton={{ label: "Connect" }}
+            connectModal={{ 
+              size: "compact", 
+              showThirdwebBranding: false, 
+              titleIcon:
+              "https://tokensolutions.mypinata.cloud/ipfs/QmQj16wnaNXC8ribmhFMdkesgbYCjKrZz1GCswKV5U5vsS",
+              
+            }}
+          />
               <button 
                 onClick={handleCreatorClick} 
                 className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition"

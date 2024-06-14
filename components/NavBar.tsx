@@ -47,7 +47,7 @@ export const NavBar = () => {
               onClick={handleGlobalClick}
               className="focus:outline-none bg-blue-600 text-white py-1 px-3 rounded-lg hover:bg-blue-500 transition-colors"
             >
-              Global
+              Buy Matic
             </button>
           </div>
           <Link href="/pricing" legacyBehavior>
@@ -55,11 +55,18 @@ export const NavBar = () => {
               Pricing
             </a>
           </Link>
+          
           <ConnectButton 
             client={client} 
             chain={chain} 
             theme={"dark"}
-            connectModal={{ size: "compact" }}
+            connectButton={{ label: "Connect" }}
+            connectModal={{ 
+              size: "compact", 
+              showThirdwebBranding: false, 
+              titleIcon:
+              "https://tokensolutions.mypinata.cloud/ipfs/QmQj16wnaNXC8ribmhFMdkesgbYCjKrZz1GCswKV5U5vsS",
+            }}
           />
           <button 
             className="md:hidden focus:outline-none"
@@ -95,6 +102,11 @@ export const NavBar = () => {
             <Link href="/pricing" legacyBehavior>
               <a className="block text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 transition-colors mb-2">
                 Pricing
+              </a>
+            </Link>
+            <Link href="/creators-balances" legacyBehavior>
+              <a className="block text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 transition-colors mb-2">
+                Creators' Balances
               </a>
             </Link>
           </div>
