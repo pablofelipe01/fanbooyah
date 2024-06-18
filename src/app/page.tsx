@@ -10,7 +10,7 @@ import { client } from "@/app/client";
 import { useActiveAccount } from 'thirdweb/react';
 import { stakingData } from '../../utils/data';
 import dynamic from 'next/dynamic';
-import { FaWallet, FaUser } from 'react-icons/fa';
+import { FaWallet, FaUser, FaDiscord } from 'react-icons/fa';
 
 const Staking = dynamic(() => import('../../components/Staking'), { ssr: false });
 
@@ -64,25 +64,32 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="flex space-x-4">
-            <ConnectButton 
-            client={client} 
-            chain={chain} 
-            theme={"dark"}
-            connectButton={{ label: "Connect" }}
-            connectModal={{ 
-              size: "compact", 
-              showThirdwebBranding: false, 
-              titleIcon:
-              "https://tokensolutions.mypinata.cloud/ipfs/QmQj16wnaNXC8ribmhFMdkesgbYCjKrZz1GCswKV5U5vsS",
-              
-            }}
-          />
+            <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+              <ConnectButton 
+                client={client} 
+                chain={chain} 
+                theme={"dark"}
+                connectButton={{ label: "Connect" }}
+                connectModal={{ 
+                  size: "compact", 
+                  showThirdwebBranding: false, 
+                  titleIcon:
+                  "https://tokensolutions.mypinata.cloud/ipfs/QmQj16wnaNXC8ribmhFMdkesgbYCjKrZz1GCswKV5U5vsS",
+                  
+                }}
+              />
               <button 
                 onClick={handleCreatorClick} 
                 className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition"
               >
                 If you are a creator, click here
+              </button>
+              <button 
+                onClick={() => window.open('https://discord.gg/NmgrKvMJ', '_blank')} 
+                className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-500 transition flex items-center justify-center space-x-2"
+              >
+                <FaDiscord className="text-xl" />
+                <span>Join our community</span>
               </button>
             </div>
             <p className="text-gray-400 text-sm mt-4">
