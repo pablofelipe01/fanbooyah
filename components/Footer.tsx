@@ -37,6 +37,7 @@ const Footer = () => {
           <a href="/terms" className="hover:text-green-500 transition-colors">Terms of Service</a>
           <a href="/privacy" className="hover:text-green-500 transition-colors">Privacy Policy</a>
           <a href="/pricing" className="hover:text-green-500 transition-colors">Pricing</a>
+          <a href="/press" className="hover:text-green-500 transition-colors">Press</a>
         </div>
         <div className="text-center text-gray-500 text-sm mt-4">
           © {new Date().getFullYear()} True Social Token. All rights reserved.
