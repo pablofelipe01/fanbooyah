@@ -61,7 +61,7 @@ const Press = () => {
             </a>
             <div className="mt-4">
             <iframe
-                  width="500"
+                  width="700"
                   height="315"
                   src="https://www.youtube.com/embed/zHVmv5h7DL0?si=mK8h0HtMokcAU9U_"
                   title="YouTube video player"
