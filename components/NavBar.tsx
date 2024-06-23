@@ -24,7 +24,7 @@ export const NavBar = () => {
           <Link href="/" legacyBehavior>
             <a className="flex items-center">
               <img 
-                src="/images/image1.png" 
+                src="/images/2.png" 
                 alt="MyApp Logo" 
                 className="h-14 w-30 object-cover"
               />

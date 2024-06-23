@@ -10,8 +10,8 @@ import { client } from "@/app/client";
 import { useActiveAccount } from 'thirdweb/react';
 import { stakingData } from '../../utils/data';
 import dynamic from 'next/dynamic';
-import { FaWallet, FaUser, FaDiscord, FaRocket } from 'react-icons/fa';
-import { IoNewspaperOutline } from "react-icons/io5";
+import { FaWallet, FaUser, FaDiscord } from 'react-icons/fa';
+import Image from 'next/image';
 
 const Staking = dynamic(() => import('../../components/Staking'), { ssr: false });
 
@@ -49,20 +49,17 @@ const Home = () => {
       <main className="relative py-16 px-4 flex-grow">
         {!isStakingVisible && (
           <header className="relative h-screen flex flex-col items-center justify-center text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Welcome to True Social Token</h1>
-            <p className="text-lg md:text-2xl text-gray-200 mb-8">The stock market of content creators</p>
-            <div className="text-center mt-16">
-              <IoNewspaperOutline className="text-5xl text-white mb-4 mx-auto" />
-              <h2 className="text-3xl font-bold text-white mb-2">Why creators need to Join Us?</h2>
-              <p className="text-lg text-gray-200 mb-8">Make your community truly yours</p>
-              <a 
-                href="/press" 
-                className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500 transition"
-              >
-                Learn More
-              </a>
-              <div className="mt-8"></div> {/* Added space below the "Learn More" button */}
+         
+            <div className="w-64 h-48 mx-auto mb-8">
+              <Image 
+                src="/images/6.png" 
+                alt="Promotional Image" 
+                width={256} 
+                height={192} 
+                className="object-cover"
+              />
             </div>
+            <p className="text-lg md:text-2xl text-gray-200 mb-8">The stock market of content creators</p>
             <div className="max-w-lg mx-auto bg-gray-800 bg-opacity-75 p-6 rounded-lg mb-8">
               <div className="flex items-center mb-4">
                 <FaWallet className="text-blue-400 text-2xl mr-3" />
@@ -131,8 +128,8 @@ const Home = () => {
             </button>
           </div>
         )}
-        <Footer />
-        <CookieConsent /> {/* Include the CookieConsent component here */}
+      <Footer />
+      <CookieConsent /> {/* Include the CookieConsent component here */}
       </main>
     </div>
   );
