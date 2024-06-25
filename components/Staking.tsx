@@ -10,7 +10,6 @@ import { getNFTs, ownerOf, totalSupply, claimTo } from "thirdweb/extensions/erc7
 import dynamic from 'next/dynamic';
 import { getContract } from "thirdweb";
 import { stakingABI } from "../utils/stakingABI";
-// @ts-ignore 
 import { StakingData, stakingData } from "../../utils/data";
 
 const NFTCard = dynamic(() => import("./NFTCard").then(mod => mod.NFTCard));
@@ -24,8 +23,6 @@ type StakingProps = {
 const Staking = ({ data }: StakingProps) => {
   const account = useActiveAccount();
   const [ownedNFS, setOwnedNFS] = useState<NFT[]>([]);
-  const [showIframe, setShowIframe] = useState(false);
-  const [iframeSrc, setIframeSrc] = useState('');
   const [fullView, setFullView] = useState(false);
 
   const NFT_CONTRACT = getContract({
@@ -105,8 +102,7 @@ const Staking = ({ data }: StakingProps) => {
   };
 
   const handleSellClick = () => {
-    setIframeSrc(data.sellLink);
-    setShowIframe(true);
+    window.open(data.sellLink, "_blank");
   };
 
   const renderSmallView = () => (
@@ -228,6 +224,12 @@ const Staking = ({ data }: StakingProps) => {
       <hr className="w-full border-gray-800"/>
       <div className="my-3 w-full text-sm">
         <h2 className="text-md font-semibold mb-2">Owned NFS</h2>
+      <button
+        onClick={() => window.open(data.exclusiveContentLink, "_blank")}
+        className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"
+      >
+        Exclusive Content
+      </button>
         <div className="flex flex-row flex-wrap justify-center w-full">
           {ownedNFS && ownedNFS.length > 0 ? (
             ownedNFS.map((nfsItem) => (
@@ -267,21 +269,6 @@ const Staking = ({ data }: StakingProps) => {
       </div>
       <hr className="w-full border-gray-800"/>
       <StakeRewards rewardTokenContract={REWARD_TOKEN_CONTRACT} stakingContract={STAKING_CONTRACT} />
-
-      {showIframe && (
-        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-80 p-5 rounded-lg z-50 w-11/12 h-[90vh] max-w-5xl overflow-hidden shadow-lg">
-          <iframe
-            src={iframeSrc}
-            className="w-full h-full border-none"
-          ></iframe>
-          <button
-            onClick={() => setShowIframe(false)}
-            className="absolute top-2 right-2 bg-gray-800 text-white py-2 px-5 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
-          >
-            Close
-          </button>
-        </div>
-      )}
       <button
         onClick={() => setFullView(false)}
         className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"
