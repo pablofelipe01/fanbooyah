@@ -18,6 +18,7 @@ export type StakingData = {
 };
 
 export const stakingData: StakingData[] = [
+   // @ts-ignore
   {
     creatorName: "Manuela Villegas",
     description: "CFull Stack Marketer | CEO @SI SEÑOR MARTECH | TOP VOICE LINKEDIN | Women to Watch | Host TED Circle",
@@ -38,6 +39,7 @@ export const stakingData: StakingData[] = [
     infoImgUrl: "/images/manu.png",
     exclusiveContentLink: "https://example.com/exclusive-manu", // New link for exclusive content
   },
+   // @ts-ignore
   {
     creatorName: "Gordito Fitt",
     description: "Como Baje 40 kilos de gordo a fit",
@@ -58,6 +60,7 @@ export const stakingData: StakingData[] = [
     infoImgUrl: "/images/fit2.png",
     exclusiveContentLink: "https://app.darkblock.io/platform/matic/embed/collection/0xE9D85A448e0d7c5C9BAA311D3c77E1317bCa708d", // New link for exclusive content
   },
+   // @ts-ignore
   {
     creatorName: "Xportiva",
     description: "Somos una empresa dedicada a la organización y producción de eventos deportivos de alto nivel.",

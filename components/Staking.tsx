@@ -10,7 +10,8 @@ import { getNFTs, ownerOf, totalSupply, claimTo } from "thirdweb/extensions/erc7
 import dynamic from 'next/dynamic';
 import { getContract } from "thirdweb";
 import { stakingABI } from "../utils/stakingABI";
-import { StakingData, stakingData } from "../../utils/data";
+import { StakingData, stakingData } from "../utils/data";
+
 
 const NFTCard = dynamic(() => import("./NFTCard").then(mod => mod.NFTCard));
 const StakedNFTCard = dynamic(() => import("./StakedNFTCard").then(mod => mod.StakedNFTCard));
@@ -24,6 +25,7 @@ const Staking = ({ data }: StakingProps) => {
   const account = useActiveAccount();
   const [ownedNFS, setOwnedNFS] = useState<NFT[]>([]);
   const [fullView, setFullView] = useState(false);
+  const [showSellModal, setShowSellModal] = useState(false);
 
   const NFT_CONTRACT = getContract({
     client: client,
@@ -102,7 +104,7 @@ const Staking = ({ data }: StakingProps) => {
   };
 
   const handleSellClick = () => {
-    window.open(data.sellLink, "_blank");
+    setShowSellModal(true);
   };
 
   const renderSmallView = () => (
@@ -224,12 +226,12 @@ const Staking = ({ data }: StakingProps) => {
       <hr className="w-full border-gray-800"/>
       <div className="my-3 w-full text-sm">
         <h2 className="text-md font-semibold mb-2">Owned NFS</h2>
-      <button
-        onClick={() => window.open(data.exclusiveContentLink, "_blank")}
-        className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"
-      >
-        Exclusive Content
-      </button>
+        <button
+          onClick={() => window.open(data.exclusiveContentLink, "_blank")}
+          className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"
+        >
+          Exclusive Content
+        </button>
         <div className="flex flex-row flex-wrap justify-center w-full">
           {ownedNFS && ownedNFS.length > 0 ? (
             ownedNFS.map((nfsItem) => (
@@ -269,6 +271,24 @@ const Staking = ({ data }: StakingProps) => {
       </div>
       <hr className="w-full border-gray-800"/>
       <StakeRewards rewardTokenContract={REWARD_TOKEN_CONTRACT} stakingContract={STAKING_CONTRACT} />
+      {showSellModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="relative bg-white rounded-lg w-11/12 max-w-5xl p-6">
+            <button
+              onClick={() => setShowSellModal(false)}
+              className="absolute top-2 right-2 bg-gray-800 text-white py-2 px-5 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
+            >
+              Close
+            </button>
+            <iframe
+              title="sell-content"
+              src={data.sellLink}
+              style={{ border: "none", width: "100%", height: "80vh" }}
+              allow="fullscreen"
+            ></iframe>
+          </div>
+        </div>
+      )}
       <button
         onClick={() => setFullView(false)}
         className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"
