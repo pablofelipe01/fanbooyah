@@ -47,9 +47,9 @@ export const stakingData: StakingData[] = [
     tokenSymbol: "GF",
     tokenPrice: "1 MATIC",
     liquidity: " USDC",
-    nftContractAddress: "0xE9D85A448e0d7c5C9BAA311D3c77E1317bCa708d",
-    rewardTokenContractAddress: "0x64C89745E4F49825421b84abd8995A2f5A627eba",
-    stakingContractAddress: "0x35fC8fb58121fDf52CB938d724C6DF2592bbF27d",
+    nftContractAddress: "0xc1Db4038de013D5653A710EFb97678fD46837A52",
+    rewardTokenContractAddress: "0x40798ad1280a8d323aA80E814B2Cbe0d4Ff6d36e",
+    stakingContractAddress: "0x7c1e3Aff7D1579051C9aACFa024f74d5D9B3bFd1",
     buyLink: "https://payments.thirdweb.com/checkout/2c6d3822-c285-4afc-bcb7-5ed95a06eb3c",
     sellLink: "https://fit-dex.vercel.app/",
     socialMedia: [
@@ -58,7 +58,7 @@ export const stakingData: StakingData[] = [
       { platform: "TikTok", url: "https://www.tiktok.com/@elgorditofit?lang=en", followers: 26000 },
     ],
     infoImgUrl: "/images/fit2.png",
-    exclusiveContentLink: "https://app.darkblock.io/platform/matic/embed/collection/0xE9D85A448e0d7c5C9BAA311D3c77E1317bCa708d", // New link for exclusive content
+    exclusiveContentLink: "https://app.darkblock.io/platform/matic/embed/collection/0xc1Db4038de013D5653A710EFb97678fD46837A52", // New link for exclusive content
   },
    // @ts-ignore
   {
