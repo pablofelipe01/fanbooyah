@@ -5,9 +5,9 @@ import Footer from '../../../components/Footer';
 
 const teamMembers = [
   {
-    name: 'Pablo',
-    position: 'CEO/CTO',
-    linkedinUrl: 'https://www.linkedin.com/in/pablo-f-acebedo/',
+    name: 'Marcelo',
+    position: 'CEO',
+    linkedinUrl: 'https://www.linkedin.com',
     imgUrl: '/images/pablo.jpg',
   },
   {

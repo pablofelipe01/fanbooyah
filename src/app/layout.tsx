@@ -7,8 +7,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "TST",
-  description: "True Social Token The stock market of content creators",
+  title: "Be a FAN",
+  description: "fanbooya",
 };
 
 export default function RootLayout({

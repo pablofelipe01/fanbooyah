@@ -59,21 +59,8 @@ const Home = () => {
                 className="object-cover"
               />
             </div>
-            <p className="text-lg md:text-2xl text-gray-200 mb-8">The stock market of content creators</p>
-            <div className="max-w-lg mx-auto bg-gray-800 bg-opacity-75 p-6 rounded-lg mb-8">
-              <div className="flex items-center mb-4">
-                <FaWallet className="text-blue-400 text-2xl mr-3" />
-                <p className="text-gray-200 text-md">
-                  If you like to invest in your favorite creator, just connect your wallet. Don’t worry if you don't have a wallet, one will be created for you automatically.
-                </p>
-              </div>
-              <div className="flex items-center">
-                <FaUser className="text-green-400 text-2xl mr-3" />
-                <p className="text-gray-200 text-md">
-                  If you are a creator interested in financing your content, click on the creator button below.
-                </p>
-              </div>
-            </div>
+            <br />
+           
             <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
               <ConnectButton 
                 client={client} 
@@ -84,15 +71,10 @@ const Home = () => {
                   size: "compact", 
                   showThirdwebBranding: false, 
                   titleIcon:
-                  "https://tokensolutions.mypinata.cloud/ipfs/QmQj16wnaNXC8ribmhFMdkesgbYCjKrZz1GCswKV5U5vsS",
+                  "https://tokensolutions.mypinata.cloud/ipfs/QmXi1W85dMuWJfBxGQGnWbpTerK6nuy8iWY766jads9kBM",
                 }}
               />
-              <button 
-                onClick={handleCreatorClick} 
-                className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition"
-              >
-                If you are a creator, click here
-              </button>
+             
               <button 
                 onClick={() => window.open('https://discord.gg/NmgrKvMJ', '_blank')} 
                 className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-500 transition flex items-center justify-center space-x-2"

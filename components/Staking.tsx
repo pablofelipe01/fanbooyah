@@ -134,23 +134,23 @@ const Staking = ({ data }: StakingProps) => {
           >
             BUY
           </TransactionButton>
-          <button
+          {/* <button
             onClick={handleSellClick}
             className="text-xs bg-red-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
           >
             SELL
-          </button>
+          </button> */}
         </div>
       </div>
       <h2 className="text-lg font-bold">{data.creatorName}</h2>
       <p className="text-center text-sm mb-3">{data.description}</p>
       <hr className="w-full border-gray-800"/>
       <div className="text-center text-sm mb-3">
-        <h3 className="text-md font-semibold">Symbol: {data.tokenSymbol}</h3>
+        {/* <h3 className="text-md font-semibold">Symbol: {data.tokenSymbol}</h3> */}
         {/* <p>ROI: {data.roi}</p> */}
         <p>Price: {data.tokenPrice}</p>
-        <p>Liquidity: {data.liquidity}</p>
-        <p>20% of creator income goes to liquidity</p>
+        {/* <p>Liquidity: {data.liquidity}</p>
+        <p>20% of creator income goes to liquidity</p> */}
         <img src={data.infoImgUrl} alt="Info" className="mt-2"/>
       </div>
       <button
@@ -189,31 +189,31 @@ const Staking = ({ data }: StakingProps) => {
           >
             BUY
           </TransactionButton>
-          <button
+          {/* <button
             onClick={handleSellClick}
             className="text-xs bg-red-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-red-500"
           >
             SELL
-          </button>
+          </button> */}
         </div>
       </div>
       <h2 className="text-lg font-bold">{data.creatorName}</h2>
       <p className="text-center text-sm mb-3">{data.description}</p>
       <hr className="w-full border-gray-800"/>
       <div className="text-center text-sm mb-3">
-        <h3 className="text-md font-semibold">Token Symbol: {data.tokenSymbol}</h3>
-        <p>ROI: {data.roi}</p>
+        {/* <h3 className="text-md font-semibold">Token Symbol: {data.tokenSymbol}</h3>
+        <p>ROI: {data.roi}</p> */}
         <p>Token Price: {data.tokenPrice}</p>
-        <p>Liquidity: {data.liquidity}</p>
-        <p>20% of creator income goes to liquidity</p>
+        {/* <p>Liquidity: {data.liquidity}</p>
+        <p>20% of creator income goes to liquidity</p> */}
         <img src={data.infoImgUrl} alt="Info" className="mt-2"/>
       </div>
       <hr className="w-full border-gray-800"/>
-      <div className="bg-white bg-opacity-10 p-3 rounded-lg shadow-lg mb-3 w-full">
-        <h3 className="text-md font-semibold mb-1">Impact in Social Media</h3>
-        <div className="flex flex-col space-y-2 text-sm">
+      {/* <div className="bg-white bg-opacity-10 p-3 rounded-lg shadow-lg mb-3 w-full">
+        <h3 className="text-md font-semibold mb-1">Impact in Social Media</h3> */}
+        {/* <div className="flex flex-col space-y-2 text-sm"> */}
         {/* @ts-ignore */}
-          {data.socialMedia.map((social, index) => (
+          {/* {data.socialMedia.map((social, index) => (
             <button key={index} onClick={() => handleSocialClick(social.url)} className="flex items-center space-x-1">
               {social.platform === "Instagram" && <FaInstagram className="w-5 h-5" />}
               {social.platform === "X" && <FaTwitter className="w-5 h-5" />}
@@ -221,11 +221,11 @@ const Staking = ({ data }: StakingProps) => {
               <span>{social.platform} - {formatFollowers(social.followers)} followers</span>
             </button>
           ))}
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <hr className="w-full border-gray-800"/>
       <div className="my-3 w-full text-sm">
-        <h2 className="text-md font-semibold mb-2">Owned NFS</h2>
+        <h2 className="text-md font-semibold mb-2">Owned Pass</h2>
         <button
           onClick={() => window.open(data.exclusiveContentLink, "_blank")}
           className="text-xs bg-blue-600 text-white py-1 px-3 rounded-lg cursor-pointer transition-colors hover:bg-blue-500 mt-3"

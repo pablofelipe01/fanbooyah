@@ -43,18 +43,18 @@ export const NavBar = () => {
             )}
           </button>
           <div className="hidden md:block">
-            <button 
+            {/* <button 
               onClick={handleGlobalClick}
               className="focus:outline-none bg-blue-600 text-white py-1 px-3 rounded-lg hover:bg-blue-500 transition-colors"
             >
               Buy Matic
-            </button>
+            </button> */}
           </div>
-          <Link href="/pricing" legacyBehavior>
+          {/* <Link href="/pricing" legacyBehavior>
             <a className="hidden md:block focus:outline-none bg-green-600 text-white py-1 px-3 rounded-lg hover:bg-green-500 transition-colors">
               Pricing
             </a>
-          </Link>
+          </Link> */}
           
           <ConnectButton 
             client={client} 
@@ -65,7 +65,7 @@ export const NavBar = () => {
               size: "compact", 
               showThirdwebBranding: false, 
               titleIcon:
-              "https://tokensolutions.mypinata.cloud/ipfs/QmQj16wnaNXC8ribmhFMdkesgbYCjKrZz1GCswKV5U5vsS",
+              "https://tokensolutions.mypinata.cloud/ipfs/QmXi1W85dMuWJfBxGQGnWbpTerK6nuy8iWY766jads9kBM",
             }}
           />
           <button 
