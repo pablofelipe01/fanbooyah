@@ -75,13 +75,13 @@ const Home = () => {
                 }}
               />
              
-              <button 
+              {/* <button 
                 onClick={() => window.open('https://discord.gg/NmgrKvMJ', '_blank')} 
                 className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-500 transition flex items-center justify-center space-x-2"
               >
                 <FaDiscord className="text-xl" />
                 <span>Join our community</span>
-              </button>
+              </button> */}
             </div>
             <p className="text-gray-400 text-sm mt-4">
               By connecting or creating a wallet, you are accepting the <a href="/terms" className="text-blue-400 hover:underline">terms and conditions</a> of this website and its applications.
