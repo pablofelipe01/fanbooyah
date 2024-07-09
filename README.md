@@ -13,3 +13,4 @@ To use the ERC-721 Staking app, you'll need to clone this repository, install de
 
 [ERC-721 Staking](https://thirdweb.com/thirdweb.eth/NFTStake)
 
+# fanbooyah
